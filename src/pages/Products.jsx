@@ -2,45 +2,76 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useCart } from "@/contexts/CartContext";
 import Layout from "@/components/layout/Layout";
-import SectionHeader from "@/components/common/SectionHeader";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Plus, Minus } from "lucide-react";
+import {
+  ShoppingCart,
+  Plus,
+  Minus,
+  Beef,
+  Flame,
+  UtensilsCrossed,
+  ChefHat,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const CATEGORY_ICONS = {
+  "لحوم بلدي": <Beef className="w-4 h-4" />,
+  "لحوم ضاني": <Beef className="w-4 h-4" />,
+  "الحلويات والأحشاء": <Beef className="w-4 h-4" />,
+  المشويات: <Flame className="w-4 h-4" />,
+  الطواجن: <ChefHat className="w-4 h-4" />,
+  الوجبات: <UtensilsCrossed className="w-4 h-4" />,
+  "صواني قصر الغربية": <UtensilsCrossed className="w-4 h-4" />,
+};
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState(null);
   const { addItem, items, updateQuantity } = useCart();
 
   useEffect(() => {
     const fetchData = async () => {
       const [p, c] = await Promise.all([
-        supabase.from("products").select("*").eq("is_available", true).order("sort_order"),
+        supabase
+          .from("products")
+          .select("*")
+          .eq("is_available", true)
+          .order("sort_order"),
         supabase.from("categories").select("*").order("sort_order"),
       ]);
       if (p.data) setProducts(p.data);
-      if (c.data) setCategories(c.data);
+      if (c.data) {
+        setCategories(c.data);
+        if (c.data.length > 0) setActiveCategory(c.data[0].id);
+      }
       setLoading(false);
     };
     fetchData();
   }, []);
 
-  const getCartQuantity = (productId) => items.find((i) => i.productId === productId)?.quantity || 0;
+  const getCartQuantity = (productId) =>
+    items.find((i) => i.productId === productId)?.quantity || 0;
 
-  const groupedProducts = categories.map((cat) => ({
-    ...cat,
-    products: products.filter((p) => p.category_id === cat.id),
-  })).filter((g) => g.products.length > 0);
+  const filteredProducts = activeCategory
+    ? products.filter((p) => p.category_id === activeCategory)
+    : products;
 
-  const uncategorized = products.filter((p) => !p.category_id);
+  const activeCategoryName =
+    categories.find((c) => c.id === activeCategory)?.name || "";
 
   return (
     <Layout>
-      <section className="bg-gradient-hero py-12 lg:py-16">
+      {/* Hero */}
+      <section className="bg-gradient-hero py-10 lg:py-14">
         <div className="container-rtl text-center text-primary-foreground">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">منتجاتنا</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3">
+            منتجاتنا
+          </h1>
           <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
-            ملوك اللحمة البلدي في مصر - تشكيلة متنوعة من اللحوم الطازة بأفضل الأسعار
+            ملوك اللحمة البلدي في مصر - تشكيلة متنوعة من اللحوم الطازة والمشويات
+            والأكل الجاهز
           </p>
         </div>
       </section>
@@ -50,39 +81,87 @@ const Products = () => {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto" />
         </div>
       ) : (
-        <>
-          {groupedProducts.map((group) => (
-            <section key={group.id} className="section-padding odd:bg-background even:bg-muted">
-              <div className="container-rtl">
-                <SectionHeader title={group.name} subtitle={group.description || undefined} />
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-                  {group.products.map((product) => (
-                    <ProductCard key={product.id} product={product} cartQty={getCartQuantity(product.id)} addItem={addItem} updateQuantity={updateQuantity} />
-                  ))}
-                </div>
+        <section className="section-padding bg-background">
+          <div className="container-rtl">
+            {/* Category Tabs - Scrollable */}
+            <div className="mb-8 -mx-4 px-4">
+              <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-hide">
+                {categories.map((cat) => {
+                  const isActive = activeCategory === cat.id;
+                  const count = products.filter(
+                    (p) => p.category_id === cat.id,
+                  ).length;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActiveCategory(cat.id)}
+                      className={cn(
+                        "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all duration-200 border-2 shrink-0",
+                        isActive
+                          ? "bg-primary text-primary-foreground border-primary shadow-md"
+                          : "bg-card text-foreground border-border hover:border-primary/40 hover:bg-muted",
+                      )}
+                    >
+                      {CATEGORY_ICONS[cat.name] || (
+                        <ShoppingCart className="w-4 h-4" />
+                      )}
+                      <span>{cat.name}</span>
+                      <span
+                        className={cn(
+                          "text-xs px-1.5 py-0.5 rounded-md",
+                          isActive
+                            ? "bg-primary-foreground/20"
+                            : "bg-muted text-muted-foreground",
+                        )}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
-            </section>
-          ))}
-
-          {uncategorized.length > 0 && (
-            <section className="section-padding bg-background">
-              <div className="container-rtl">
-                <SectionHeader title="منتجات أخرى" />
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-                  {uncategorized.map((product) => (
-                    <ProductCard key={product.id} product={product} cartQty={getCartQuantity(product.id)} addItem={addItem} updateQuantity={updateQuantity} />
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
-
-          {products.length === 0 && (
-            <div className="section-padding text-center text-muted-foreground">
-              لا توجد منتجات متاحة حالياً
             </div>
-          )}
-        </>
+
+            {/* Category Description */}
+            {activeCategoryName && (
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-foreground">
+                  {activeCategoryName}
+                </h2>
+                {categories.find((c) => c.id === activeCategory)
+                  ?.description && (
+                  <p className="text-muted-foreground mt-1">
+                    {
+                      categories.find((c) => c.id === activeCategory)
+                        ?.description
+                    }
+                  </p>
+                )}
+                <div className="mt-2 h-1 w-16 bg-primary rounded-full" />
+              </div>
+            )}
+
+            {/* Products Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  cartQty={getCartQuantity(product.id)}
+                  addItem={addItem}
+                  updateQuantity={updateQuantity}
+                />
+              ))}
+            </div>
+
+            {filteredProducts.length === 0 && (
+              <div className="text-center py-16 text-muted-foreground">
+                <ShoppingCart className="w-12 h-12 mx-auto mb-3 opacity-40" />
+                <p className="text-lg">لا توجد منتجات في هذا التصنيف حالياً</p>
+              </div>
+            )}
+          </div>
+        </section>
       )}
     </Layout>
   );
@@ -100,40 +179,74 @@ const ProductCard = ({ product, cartQty, addItem, updateQuantity }) => {
   };
 
   return (
-    <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1">
-      <div className="aspect-square relative overflow-hidden">
+    <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col">
+      {/* Image or Placeholder */}
+      <div className="aspect-[4/3] relative overflow-hidden bg-muted">
         {product.image_url ? (
-          <img src={product.image_url} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+          <img
+            src={product.image_url}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+          />
         ) : (
-          <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground">
-            <ShoppingCart className="w-12 h-12" />
+          <div className="w-full h-full flex items-center justify-center">
+            <Beef className="w-10 h-10 text-muted-foreground/30" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-        <div className="absolute bottom-3 right-3">
-          <span className="bg-secondary text-secondary-foreground text-sm font-bold px-3 py-1 rounded-md">
-            {product.price} ج.م/{product.unit}
+        {/* Price Badge */}
+        <div className="absolute bottom-2 right-2">
+          <span className="bg-primary text-primary-foreground text-xs sm:text-sm font-bold px-2.5 py-1 rounded-lg shadow-md">
+            {product.price} ج.م
           </span>
         </div>
       </div>
-      <div className="p-4">
-        <h3 className="font-bold text-foreground mb-1">{product.name}</h3>
-        {product.description && <p className="text-muted-foreground text-sm mb-3">{product.description}</p>}
-        {cartQty === 0 ? (
-          <Button size="sm" className="w-full gap-2" onClick={handleAdd}>
-            <Plus className="w-4 h-4" /> أضف للسلة
-          </Button>
-        ) : (
-          <div className="flex items-center justify-center gap-3">
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => updateQuantity(product.id, cartQty - 1)}>
-              <Minus className="w-4 h-4" />
-            </Button>
-            <span className="font-bold text-lg">{cartQty}</span>
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => updateQuantity(product.id, cartQty + 1)}>
-              <Plus className="w-4 h-4" />
-            </Button>
-          </div>
+
+      {/* Content */}
+      <div className="p-3 sm:p-4 flex flex-col flex-1">
+        <h3 className="font-bold text-foreground text-sm sm:text-base mb-0.5 line-clamp-2">
+          {product.name}
+        </h3>
+        <p className="text-muted-foreground text-xs mb-1">/{product.unit}</p>
+        {product.description && (
+          <p className="text-muted-foreground text-xs mb-2 line-clamp-2">
+            {product.description}
+          </p>
         )}
+
+        <div className="mt-auto pt-2">
+          {cartQty === 0 ? (
+            <Button
+              size="sm"
+              className="w-full gap-1.5 text-xs sm:text-sm"
+              onClick={handleAdd}
+            >
+              <Plus className="w-3.5 h-3.5" /> أضف للسلة
+            </Button>
+          ) : (
+            <div className="flex items-center justify-center gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-7 w-7 sm:h-8 sm:w-8"
+                onClick={() => updateQuantity(product.id, cartQty - 1)}
+              >
+                <Minus className="w-3.5 h-3.5" />
+              </Button>
+              <span className="font-bold text-base sm:text-lg w-6 text-center">
+                {cartQty}
+              </span>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-7 w-7 sm:h-8 sm:w-8"
+                onClick={() => updateQuantity(product.id, cartQty + 1)}
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
