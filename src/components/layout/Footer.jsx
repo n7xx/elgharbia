@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import { Phone, MapPin, Clock, Facebook, Instagram } from "lucide-react";
+import { Phone, MapPin, Clock, Facebook, Instagram, Linkedin } from "lucide-react";
 import logo from "@/assets/logo.jpg";
+import fourCreativeDark from "@/assets/4creative-darkmode-logo.png";
+import fourCreativeLight from "@/assets/4creative-lightmode-logo.png";
 
 const branches = [
   { name: "العصافرة (الرئيسي)", phone: "5514931", address: "جمال عبد الناصر العصافرة بحري", mapQuery: "العصافرة+بحري+الاسكندرية" },
@@ -33,7 +35,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold text-secondary-foreground mb-4">روابط سريعة</h4>
+            <h4 className="text-lg font-bold text-secondary-foreground mb-4">
+              روابط سريعة
+            </h4>
             <ul className="space-y-2">
               {[
                 { href: "/", label: "الرئيسية" },
@@ -55,11 +59,15 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold text-secondary-foreground mb-4">فروعنا</h4>
+            <h4 className="text-lg font-bold text-secondary-foreground mb-4">
+              فروعنا
+            </h4>
             <ul className="space-y-2.5">
               {branches.map((branch, i) => (
                 <li key={i} className="text-sm">
-                  <span className="font-semibold text-secondary-foreground/90 block">{branch.name}</span>
+                  <span className="font-semibold text-secondary-foreground/90 block">
+                    {branch.name}
+                  </span>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${branch.mapQuery}`}
                     target="_blank"
@@ -82,7 +90,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold text-secondary-foreground mb-4">تواصل معنا</h4>
+            <h4 className="text-lg font-bold text-secondary-foreground mb-4">
+              تواصل معنا
+            </h4>
             <ul className="space-y-3 mb-6">
               <li>
                 <a
@@ -98,7 +108,9 @@ const Footer = () => {
                 <span>يوميًا من 8 صباحًا - 12 منتصف الليل</span>
               </li>
             </ul>
-            <h4 className="text-sm font-bold text-secondary-foreground mb-3">تابعنا</h4>
+            <h4 className="text-sm font-bold text-secondary-foreground mb-3">
+              تابعنا
+            </h4>
             <div className="flex gap-3 mb-4">
               <a
                 href="https://www.facebook.com/profile.php?id=100088041447494"
@@ -119,17 +131,70 @@ const Footer = () => {
             </div>
             <div className="bg-secondary/30 rounded-lg p-4">
               <p className="text-gold font-semibold mb-1">اطلب الآن!</p>
-              <p className="text-sm text-secondary-foreground/80">التوصيل متاح لجميع مناطق الإسكندرية</p>
+              <p className="text-sm text-secondary-foreground/80">
+                التوصيل متاح لجميع مناطق الإسكندرية
+              </p>
             </div>
           </div>
         </div>
       </div>
 
+      {/* Bottom Bar */}
       <div className="border-t border-secondary/30">
-        <div className="container-rtl py-4">
+        <div className="container-rtl py-4 space-y-3">
           <p className="text-center text-secondary-foreground/60 text-sm">
-            © {new Date().getFullYear()} جزارة الغربية جميع الحقوق محفوظة
+            © {new Date().getFullYear()} جزارة و مشويات الغربية - جميع الحقوق
+            محفوظة
           </p>
+
+          {/* 4Creative Credit */}
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex items-center gap-4">
+              <a
+                href="https://4creative.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-opacity hover:opacity-80"
+              >
+                <img
+                  src={fourCreativeLight}
+                  alt="4Creative"
+                  className="h-12 w-auto object-contain dark:hidden"
+                />
+                <img
+                  src={fourCreativeDark}
+                  alt="4Creative"
+                  className="h-12 w-auto object-contain hidden dark:block"
+                />
+              </a>
+              <p className="text-center text-secondary-foreground/60 text-sm">
+                تم تطوير هذا الموقع بواسطة 4Creative - فريق متخصص في تصميم
+                وتطوير المواقع الإلكترونية
+              </p>
+            </div>
+            <p className="text-secondary-foreground/50 text-xs flex items-center gap-1 flex-wrap justify-center">
+              Developed by
+              <a
+                href="https://www.linkedin.com/in/yousefelgendy/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary-foreground/70 hover:text-gold transition-colors font-medium inline-flex items-center gap-0.5"
+              >
+                <Linkedin className="w-3 h-3" />
+                Yousef Elgendy
+              </a>
+              &
+              <a
+                href="https://www.linkedin.com/in/n7xx/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary-foreground/70 hover:text-gold transition-colors font-medium inline-flex items-center gap-0.5"
+              >
+                <Linkedin className="w-3 h-3" />
+                Nashaat Fathy
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
