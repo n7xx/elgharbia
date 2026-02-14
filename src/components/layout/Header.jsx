@@ -40,7 +40,7 @@ const Header = () => {
       <div className="container-rtl py-1.5">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="جزارة الغربية - اسم يعني الثقة" className="h-16 sm:h-16 w-auto object-contain drop-shadow-md" />
+            <img src={logo} alt="جزارة الغربية - اسم يعني الثقة" className="h-16 sm:h-18 w-auto object-contain drop-shadow-md" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
