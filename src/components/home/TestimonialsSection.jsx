@@ -11,34 +11,10 @@ import AnimatedSection from "@/components/common/AnimatedSection";
 import AnimatedItem from "@/components/common/AnimatedItem";
 
 const testimonials = [
-  {
-    id: 1,
-    name: "أحمد محمود",
-    location: "سيدي جابر",
-    rating: 5,
-    text: "أفضل جزارة في إسكندرية بجد! اللحمة طازة جداً والخدمة ممتازة. التوصيل سريع ودايماً بيوصلوا في الميعاد.",
-  },
-  {
-    id: 2,
-    name: "سارة أحمد",
-    location: "سموحة",
-    rating: 5,
-    text: "المشويات عندهم تحفة! الكباب والكفتة طعمهم مميز جداً. أنصح الكل يجربوا صينية المشويات المشكلة.",
-  },
-  {
-    id: 3,
-    name: "محمد عبدالله",
-    location: "المنتزه",
-    rating: 5,
-    text: "بقالي سنين بتعامل معاهم والجودة ثابتة دايماً. الأسعار كويسة جداً مقارنة بالجودة اللي بتاخدها.",
-  },
-  {
-    id: 4,
-    name: "نورهان خالد",
-    location: "جليم",
-    rating: 5,
-    text: "خدمة العملاء عندهم رائعة جداً! دايماً بيساعدوني أختار قطع اللحمة المناسبة للأكلة اللي هعملها.",
-  },
+  { id: 1, name: "أحمد محمود", location: "سيدي جابر", rating: 5, text: "أفضل جزارة في إسكندرية بجد! اللحمة طازة جداً والخدمة ممتازة. التوصيل سريع ودايماً بيوصلوا في الميعاد." },
+  { id: 2, name: "سارة أحمد", location: "سموحة", rating: 5, text: "المشويات عندهم تحفة! الكباب والكفتة طعمهم مميز جداً. أنصح الكل يجربوا صينية المشويات المشكلة." },
+  { id: 3, name: "محمد عبدالله", location: "المنتزه", rating: 5, text: "بقالي سنين بتعامل معاهم والجودة ثابتة دايماً. الأسعار كويسة جداً مقارنة بالجودة اللي بتاخدها." },
+  { id: 4, name: "نورهان خالد", location: "جليم", rating: 5, text: "خدمة العملاء عندهم رائعة جداً! دايماً بيساعدوني أختار قطع اللحمة المناسبة للأكلة اللي هعملها." },
 ];
 
 const TestimonialCard = ({ testimonial }) => (
@@ -67,7 +43,6 @@ const TestimonialsSection = () => {
   return (
     <section className="section-padding bg-muted/30">
       <div className="container-rtl">
-        {/* Header */}
         <AnimatedSection className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-gold/10 text-gold rounded-full px-4 py-2 mb-4">
             <Star className="w-5 h-5 fill-current" />
@@ -81,7 +56,6 @@ const TestimonialsSection = () => {
           </p>
         </AnimatedSection>
 
-        {/* Mobile Carousel */}
         <div className="md:hidden">
           <Carousel
             opts={{
@@ -104,7 +78,6 @@ const TestimonialsSection = () => {
           </Carousel>
         </div>
 
-        {/* Desktop Grid */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonials.map((testimonial, index) => (
             <AnimatedItem key={testimonial.id} index={index}>
@@ -113,13 +86,12 @@ const TestimonialsSection = () => {
           ))}
         </div>
 
-        {/* Trust Badge */}
         <div className="mt-10 text-center">
           <div className="inline-flex items-center gap-3 bg-card rounded-full px-6 py-3 shadow-sm border border-border">
             <div className="flex -space-x-2 space-x-reverse">
               {[...Array(4)].map((_, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="w-8 h-8 rounded-full bg-primary/20 border-2 border-card flex items-center justify-center"
                 >
                   <span className="text-xs font-bold text-primary">

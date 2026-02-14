@@ -10,34 +10,10 @@ import ketf from "@/assets/ketf-350.jpg";
 import sogo2 from "@/assets/sogo2-330.jpg";
 
 const categories = [
-  {
-    id: 1,
-    title: "لحم مليس",
-    description: "لحم بلدي طازة بدون عظم",
-    image: meatSlices,
-    price: "380 جنيه/كيلو",
-  },
-  {
-    id: 2,
-    title: "كباب حلة",
-    description: "قطع كباب مميزة للطبخ",
-    image: kabab,
-    price: "420 جنيه/كيلو",
-  },
-  {
-    id: 3,
-    title: "كتف",
-    description: "لحم كتف طازة",
-    image: ketf,
-    price: "350 جنيه/كيلو",
-  },
-  {
-    id: 4,
-    title: "سجق",
-    description: "سجق بلدي طازة",
-    image: sogo2,
-    price: "330 جنيه/كيلو",
-  },
+  { id: 1, title: "لحم مليس", description: "لحم بلدي طازة بدون عظم", image: meatSlices, price: "380 جنيه/كيلو" },
+  { id: 2, title: "كباب حلة", description: "قطع كباب مميزة للطبخ", image: kabab, price: "420 جنيه/كيلو" },
+  { id: 3, title: "كتف", description: "لحم كتف طازة", image: ketf, price: "350 جنيه/كيلو" },
+  { id: 4, title: "سجق", description: "سجق بلدي طازة", image: sogo2, price: "330 جنيه/كيلو" },
 ];
 
 const ProductsPreview = () => {

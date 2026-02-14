@@ -3,36 +3,12 @@ import AnimatedSection from "@/components/common/AnimatedSection";
 import AnimatedItem from "@/components/common/AnimatedItem";
 
 const features = [
-  {
-    icon: Shield,
-    title: "جودة مضمونة",
-    description: "لحوم بلدي طازة من أجود المصادر",
-  },
-  {
-    icon: Truck,
-    title: "توصيل سريع",
-    description: "نوصلك لحد البيت في أسرع وقت",
-  },
-  {
-    icon: Percent,
-    title: "أسعار منافسة",
-    description: "أفضل الأسعار في السوق مع عروض مستمرة",
-  },
-  {
-    icon: Clock,
-    title: "متاحين دائمًا",
-    description: "من 8 الصبح لـ 12 بالليل كل يوم",
-  },
-  {
-    icon: Award,
-    title: "خبرة سنين",
-    description: "خبرة طويلة في مجال الجزارة والمشويات",
-  },
-  {
-    icon: Users,
-    title: "آلاف العملاء",
-    description: "ثقة آلاف الأسر في الإسكندرية",
-  },
+  { icon: Shield, title: "جودة مضمونة", description: "لحوم بلدي طازة من أجود المصادر" },
+  { icon: Truck, title: "توصيل سريع", description: "نوصلك لحد البيت في أسرع وقت" },
+  { icon: Percent, title: "أسعار منافسة", description: "أفضل الأسعار في السوق مع عروض مستمرة" },
+  { icon: Clock, title: "متاحين دائمًا", description: "من 8 الصبح لـ 12 بالليل كل يوم" },
+  { icon: Award, title: "خبرة سنين", description: "خبرة طويلة في مجال الجزارة والمشويات" },
+  { icon: Users, title: "آلاف العملاء", description: "ثقة آلاف الأسر في الإسكندرية" },
 ];
 
 const FeaturesSection = () => {

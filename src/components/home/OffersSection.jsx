@@ -8,36 +8,14 @@ import meat380 from "@/assets/meat-380.jpg";
 import beefsteak from "@/assets/beefsteak-420.jpg";
 
 const offers = [
-  {
-    id: 1,
-    title: "لحمة خضار",
-    description: "لحم بلدي طازة مقطع للخضار",
-    price: "380 جنيه/كيلو",
-    image: meatKhodar,
-    badge: "عرض مميز",
-  },
-  {
-    id: 2,
-    title: "لحمة مليس",
-    description: "لحم بلدي بدون عظم",
-    price: "380 جنيه/كيلو",
-    image: meat380,
-    badge: "الأكثر طلبًا",
-  },
-  {
-    id: 3,
-    title: "بفتيك",
-    description: "شرائح بفتيك مميزة",
-    price: "420 جنيه/كيلو",
-    image: beefsteak,
-    badge: "جودة ممتازة",
-  },
+  { id: 1, title: "لحمة خضار", description: "لحم بلدي طازة مقطع للخضار", price: "380 جنيه/كيلو", image: meatKhodar, badge: "عرض مميز" },
+  { id: 2, title: "لحمة مليس", description: "لحم بلدي بدون عظم", price: "380 جنيه/كيلو", image: meat380, badge: "الأكثر طلبًا" },
+  { id: 3, title: "بفتيك", description: "شرائح بفتيك مميزة", price: "420 جنيه/كيلو", image: beefsteak, badge: "جودة ممتازة" },
 ];
 
 const OffersSection = () => {
   return (
     <section className="section-padding bg-brand-cream relative overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
@@ -62,8 +40,8 @@ const OffersSection = () => {
             <AnimatedItem key={offer.id} index={index}>
               <div className="bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover border border-border hover:-translate-y-1 transition-all duration-300">
                 <div className="aspect-square relative overflow-hidden">
-                  <img 
-                    src={offer.image} 
+                  <img
+                    src={offer.image}
                     alt={offer.title}
                     className="w-full h-full object-cover"
                   />

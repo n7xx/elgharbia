@@ -6,12 +6,11 @@ import logo from "@/assets/logo.jpg";
 const Contact = () => {
   return (
     <Layout>
-      {/* Hero Banner */}
       <section className="bg-gradient-hero py-12 lg:py-16">
         <div className="container-rtl text-center text-white">
-          <img 
-            src={logo} 
-            alt="جزارة الغربية" 
+          <img
+            src={logo}
+            alt="جزارة الغربية"
             className="h-20 w-auto mx-auto mb-4 bg-white rounded-xl p-2"
           />
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">تواصل معنا</h1>
@@ -21,18 +20,15 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Content */}
       <section className="section-padding bg-background">
         <div className="container-rtl">
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Info */}
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
                 معلومات التواصل
               </h2>
 
               <div className="space-y-6">
-                {/* Phone */}
                 <a
                   href="tel:19026"
                   className="flex items-start gap-4 p-4 bg-card rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 group"
@@ -47,9 +43,8 @@ const Contact = () => {
                   </div>
                 </a>
 
-                {/* WhatsApp */}
                 <a
-                  href="https://wa.me/201234567890"
+                  href="https://wa.me/201111880162"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-4 p-4 bg-card rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 group"
@@ -64,7 +59,6 @@ const Contact = () => {
                   </div>
                 </a>
 
-                {/* Address */}
                 <div className="flex items-start gap-4 p-4 bg-card rounded-xl shadow-card">
                   <div className="w-12 h-12 bg-gradient-accent rounded-xl flex items-center justify-center">
                     <MapPin className="w-6 h-6 text-white" />
@@ -76,7 +70,6 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Working Hours */}
                 <div className="flex items-start gap-4 p-4 bg-card rounded-xl shadow-card">
                   <div className="w-12 h-12 bg-gold rounded-xl flex items-center justify-center">
                     <Clock className="w-6 h-6 text-gold-foreground" />
@@ -89,7 +82,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Social Media */}
               <div className="mt-8">
                 <h3 className="font-bold text-foreground mb-4">تابعنا على</h3>
                 <div className="flex gap-3">
@@ -112,7 +104,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Quick CTA */}
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Button variant="cta" size="lg" className="flex-1" asChild>
                   <a href="tel:19026">
@@ -121,7 +112,7 @@ const Contact = () => {
                   </a>
                 </Button>
                 <Button variant="whatsapp" size="lg" className="flex-1" asChild>
-                  <a href="https://wa.me/201234567890" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/201111880162" target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="w-5 h-5" />
                     واتساب
                   </a>
@@ -129,7 +120,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Map */}
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
                 موقعنا

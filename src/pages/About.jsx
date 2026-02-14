@@ -1,15 +1,5 @@
 import Layout from "@/components/layout/Layout";
-import {
-  Shield,
-  Award,
-  Users,
-  Truck,
-  Clock,
-  Heart,
-  Phone,
-  MessageCircle,
-  MapPin,
-} from "lucide-react";
+import { Shield, Award, Users, Truck, Clock, Heart, Phone, MessageCircle, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import shopTeam from "@/assets/shop-team.jpg";
 import logo from "@/assets/logo.jpg";
@@ -18,26 +8,22 @@ const values = [
   {
     icon: Shield,
     title: "جودة مضمونة",
-    description:
-      "بنختار لحومنا بعناية من أجود المصادر. كل قطعة لحم بتمر بفحص دقيق عشان نضمنلك أحسن جودة.",
+    description: "بنختار لحومنا بعناية من أجود المصادر. كل قطعة لحم بتمر بفحص دقيق عشان نضمنلك أحسن جودة.",
   },
   {
     icon: Award,
     title: "خبرة سنين",
-    description:
-      "خبرة طويلة في مجال الجزارة والمشويات. نعرف ازاي نختار ونحضر اللحمة صح.",
+    description: "خبرة طويلة في مجال الجزارة والمشويات. نعرف ازاي نختار ونحضر اللحمة صح.",
   },
   {
     icon: Users,
     title: "آلاف العملاء",
-    description:
-      "ثقة آلاف الأسر في الإسكندرية اللي بتعتمد علينا في احتياجاتها من اللحوم.",
+    description: "ثقة آلاف الأسر في الإسكندرية اللي بتعتمد علينا في احتياجاتها من اللحوم.",
   },
   {
     icon: Truck,
     title: "توصيل سريع",
-    description:
-      "نوصلك طلبك لحد البيت في أسرع وقت. التوصيل متاح لجميع مناطق الإسكندرية.",
+    description: "نوصلك طلبك لحد البيت في أسرع وقت. التوصيل متاح لجميع مناطق الإسكندرية.",
   },
   {
     icon: Clock,
@@ -93,7 +79,6 @@ const branches = [
 const About = () => {
   return (
     <Layout>
-      {/* Hero Banner */}
       <section className="bg-gradient-hero py-12 lg:py-16">
         <div className="container-rtl text-center text-primary-foreground">
           <img
@@ -101,16 +86,13 @@ const About = () => {
             alt="جزارة الغربية"
             className="h-24 w-auto mx-auto mb-4 bg-card rounded-xl p-2"
           />
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">
-            من نحن
-          </h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">من نحن</h1>
           <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
             جزارة الغربية - اسم يعني الثقة - ملوك اللحمة البلدي في مصر
           </p>
         </div>
       </section>
 
-      {/* Story Section */}
       <section className="section-padding bg-background">
         <div className="container-rtl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -120,18 +102,13 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
                 <p>
-                  جزارة الغربية - اسم يعني الثقة. بدأنا رحلتنا بهدف واحد بسيط:
-                  نقدم للعميل لحمة بلدي طازة بجودة عالية وسعر مناسب.
+                  جزارة الغربية - اسم يعني الثقة. بدأنا رحلتنا بهدف واحد بسيط: نقدم للعميل لحمة بلدي طازة بجودة عالية وسعر مناسب.
                 </p>
                 <p>
-                  تحت إدارة{" "}
-                  <strong className="text-foreground">خلف محمد خالد</strong>،
-                  أصبحنا ملوك اللحمة البلدي في مصر. نفتخر بتقديم أجود أنواع
-                  اللحوم الطازة لعملائنا في الإسكندرية.
+                  تحت إدارة <strong className="text-foreground">خلف محمد خالد</strong>، أصبحنا ملوك اللحمة البلدي في مصر. نفتخر بتقديم أجود أنواع اللحوم الطازة لعملائنا في الإسكندرية.
                 </p>
                 <p>
-                  النهارده، إحنا فخورين بثقة آلاف الأسر اللي بتعتمد علينا
-                  يوميًا. وده اللي بيدفعنا نستمر ونطور أكتر.
+                  النهارده، إحنا فخورين بثقة آلاف الأسر اللي بتعتمد علينا يوميًا. وده اللي بيدفعنا نستمر ونطور أكتر.
                 </p>
               </div>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
@@ -142,11 +119,7 @@ const About = () => {
                   </a>
                 </Button>
                 <Button variant="whatsapp" size="lg" asChild>
-                  <a
-                    href="https://wa.me/201289898489"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href="https://wa.me/201111880162" target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="w-5 h-5" />
                     واتساب
                   </a>
@@ -165,7 +138,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Branches Section */}
       <section className="section-padding bg-muted">
         <div className="container-rtl">
           <div className="text-center mb-12">
@@ -216,7 +188,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Values Section */}
       <section className="section-padding bg-background">
         <div className="container-rtl">
           <div className="text-center mb-12">
@@ -238,9 +209,7 @@ const About = () => {
                 <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center mb-4">
                   <value.icon className="w-7 h-7 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">
-                  {value.title}
-                </h3>
+                <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
                 <p className="text-muted-foreground">{value.description}</p>
               </div>
             ))}
@@ -248,7 +217,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="section-padding bg-gradient-hero">
         <div className="container-rtl text-center text-primary-foreground">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
@@ -265,11 +233,7 @@ const About = () => {
               </a>
             </Button>
             <Button variant="whatsapp" size="xl" asChild>
-              <a
-                href="https://wa.me/201289898489"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://wa.me/201111880162" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-6 h-6" />
                 واتساب
               </a>

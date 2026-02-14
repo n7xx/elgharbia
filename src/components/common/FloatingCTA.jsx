@@ -4,7 +4,7 @@ const FloatingCTA = () => {
   return (
     <div className="fixed bottom-4 left-4 z-50 flex flex-col gap-3">
       <a
-        href="https://wa.me/201234567890"
+        href="https://wa.me/201111880162"
         target="_blank"
         rel="noopener noreferrer"
         className="w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform animate-pulse-slow"

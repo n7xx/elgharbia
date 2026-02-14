@@ -25,9 +25,8 @@ const DeliverySection = () => {
         <AnimatedSection>
           <div className="bg-card rounded-2xl shadow-lg overflow-hidden">
             <div className="grid lg:grid-cols-2">
-              {/* Content */}
               <div className="p-8 lg:p-12">
-                <motion.div 
+                <motion.div
                   className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-2 mb-6"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -38,7 +37,7 @@ const DeliverySection = () => {
                   <span className="font-semibold">خدمة التوصيل</span>
                 </motion.div>
 
-                <motion.h2 
+                <motion.h2
                   className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +46,7 @@ const DeliverySection = () => {
                 >
                   نوصلك لحد البيت
                 </motion.h2>
-                <motion.p 
+                <motion.p
                   className="text-muted-foreground text-lg mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -57,7 +56,7 @@ const DeliverySection = () => {
                   توصيل سريع لجميع مناطق الإسكندرية. اطلب دلوقتي واستلم في أسرع وقت!
                 </motion.p>
 
-                <motion.div 
+                <motion.div
                   className="mb-8"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -81,7 +80,7 @@ const DeliverySection = () => {
                   </div>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                   className="flex flex-col sm:flex-row gap-3"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -89,13 +88,13 @@ const DeliverySection = () => {
                   transition={{ duration: 0.5, delay: 0.5 }}
                 >
                   <Button variant="cta" size="lg" asChild>
-                    <a href="tel:+201234567890">
+                    <a href="tel:+201111880162">
                       <Phone className="w-5 h-5" />
                       اتصل للطلب
                     </a>
                   </Button>
                   <Button variant="whatsapp" size="lg" asChild>
-                    <a href="https://wa.me/201234567890" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/201111880162" target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="w-5 h-5" />
                       اطلب واتساب
                     </a>
@@ -103,8 +102,7 @@ const DeliverySection = () => {
                 </motion.div>
               </div>
 
-              {/* Map placeholder */}
-              <motion.div 
+              <motion.div
                 className="bg-muted min-h-[300px] lg:min-h-full relative"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
