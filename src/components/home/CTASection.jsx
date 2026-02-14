@@ -1,5 +1,6 @@
-import { Phone, MessageCircle } from "lucide-react";
+import { ShoppingBag, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "@/assets/logo-transparent.png";
 
@@ -53,17 +54,17 @@ const CTASection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              <Button variant="gold" size="xl" asChild>
-                <a href="tel:19026">
-                  <Phone className="w-6 h-6" />
-                  الخط الساخن 19026
-                </a>
+              <Button variant="hero" size="xl" asChild>
+                <Link to="/products">
+                  <ShoppingBag className="w-6 h-6" />
+                  تسوق الآن
+                </Link>
               </Button>
-              <Button variant="whatsapp" size="xl" asChild>
-                <a href="https://wa.me/201111880162" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-6 h-6" />
-                  واتساب
-                </a>
+              <Button variant="gold" size="xl" asChild>
+                <Link to="/offers">
+                  <Sparkles className="w-6 h-6" />
+                  شوف عروضنا
+                </Link>
               </Button>
             </motion.div>
 

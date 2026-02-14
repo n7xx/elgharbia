@@ -23,7 +23,7 @@ const ProductsPreview = () => {
         <AnimatedSection>
           <SectionHeader
             title="منتجاتنا"
-            subtitle="تشكيلة متنوعة من اللحوم الطازة والمشويات اللذيذة"
+            subtitle="تشكيلة متنوعة من اللحوم البلدي والمشويات اللي يحبها قلبك"
           />
         </AnimatedSection>
 

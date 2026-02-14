@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
-import { Phone, MapPin, Clock, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Phone, MapPin, Clock, Facebook, Linkedin } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 import fourCreativeDark from "@/assets/4creative-darkmode-logo.png";
 import fourCreativeLight from "@/assets/4creative-lightmode-logo.png";
 
 const branches = [
-  { name: "العصافرة (الرئيسي)", phone: "5514931", address: "جمال عبد الناصر العصافرة بحري", mapQuery: "العصافرة+بحري+الاسكندرية" },
+  {
+    name: "العصافرة (الرئيسي)",
+    phone: "5514931",
+    phones: ["01044476413", "01111880575", "035514631", "035514830", "035514839", "035514931"],
+    address: "جمال عبد الناصر العصافرة بحري",
+    mapQuery: "العصافرة+بحري+الاسكندرية",
+  },
   { name: "البيطاش", phone: "01278548266", address: "أمام شارع عين شمس", mapQuery: "البيطاش+الاسكندرية" },
   { name: "فضة", phone: "0122748223", address: "بجوار صيدلية فضة", mapQuery: "فضة+الاسكندرية" },
   { name: "الدرابسة", phone: "01200099137", address: "أمام مدرسة النموذجية", mapQuery: "الدرابسة+الاسكندرية" },
@@ -45,11 +51,12 @@ const Footer = () => {
                 { href: "/offers", label: "العروض" },
                 { href: "/about", label: "من نحن" },
                 { href: "/contact", label: "تواصل معنا" },
+                { href: "/food-village", label: "قصر الغربية", highlight: true },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-secondary-foreground/80 hover:text-gold transition-colors"
+                    className={link.highlight ? "text-amber-400 hover:text-amber-300 transition-colors font-medium" : "text-secondary-foreground/80 hover:text-gold transition-colors"}
                   >
                     {link.label}
                   </Link>
@@ -77,13 +84,16 @@ const Footer = () => {
                     <MapPin className="w-3 h-3 shrink-0" />
                     {branch.address}
                   </a>
-                  <a
-                    href={`tel:${branch.phone}`}
-                    className="text-gold hover:text-gold/80 transition-colors text-xs flex items-center gap-1 mt-0.5"
-                  >
-                    <Phone className="w-3 h-3" />
-                    {branch.phone}
-                  </a>
+                  {(branch.phones || [branch.phone]).map((p) => (
+                    <a
+                      key={p}
+                      href={`tel:${p.replace(/\s/g, "")}`}
+                      className="text-gold hover:text-gold/80 transition-colors text-xs flex items-center gap-1 mt-0.5 block"
+                    >
+                      <Phone className="w-3 h-3" />
+                      {p}
+                    </a>
+                  ))}
                 </li>
               ))}
             </ul>
@@ -120,13 +130,6 @@ const Footer = () => {
                 aria-label="فيسبوك"
               >
                 <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 bg-secondary/50 rounded-full flex items-center justify-center hover:bg-gold transition-colors group"
-                aria-label="انستجرام"
-              >
-                <Instagram className="w-5 h-5 group-hover:text-charcoal" />
               </a>
             </div>
             <div className="bg-secondary/30 rounded-lg p-4">

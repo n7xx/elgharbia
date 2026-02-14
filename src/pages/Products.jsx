@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useCart } from "@/contexts/CartContext";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { products, categories } from "@/data/products";
 import OptimizedImage from "@/components/common/OptimizedImage";
+import { calculateLineTotal, parseWeightInput, clampWeight, MIN_WEIGHT_KG } from "@/lib/priceUtils";
 
 const CATEGORY_ICONS = {
   "لحوم بلدي": <Beef className="w-4 h-4" />,
@@ -112,16 +113,74 @@ const Products = () => {
   );
 };
 
+const WEIGHT_STEP = 0.5;
+const isByKilo = (unit) => unit === "كيلو";
+
 const ProductCard = ({ product, cartQty, addItem, updateQuantity }) => {
+  const [weightKg, setWeightKg] = useState(1);
+  const [weightInput, setWeightInput] = useState("1");
+  const byKilo = isByKilo(product.unit);
+  const displayPrice = byKilo ? calculateLineTotal(product.price, weightKg) : product.price;
+
+  const handleWeightChange = useCallback(
+    (e) => {
+      const raw = e.target.value;
+      if (raw === "" || raw === ".") {
+        setWeightInput(raw);
+        return;
+      }
+      const parsed = parseWeightInput(raw);
+      if (parsed !== null) {
+        setWeightKg(parsed);
+        setWeightInput(String(parsed));
+      } else if (/^\d*\.?\d*$/.test(raw)) {
+        setWeightInput(raw);
+      }
+    },
+    []
+  );
+
+  const handleWeightBlur = useCallback(() => {
+    const parsed = parseWeightInput(weightInput);
+    const clamped = parsed !== null ? clampWeight(parsed) : MIN_WEIGHT_KG;
+    setWeightKg(clamped);
+    setWeightInput(String(clamped));
+  }, [weightInput]);
+
   const handleAdd = () => {
-    addItem({
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      unit: product.unit,
-      imageUrl: product.image_url,
-    });
+    const qty = byKilo ? weightKg : 1;
+    addItem(
+      {
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        unit: product.unit,
+        imageUrl: product.image_url,
+      },
+      qty
+    );
   };
+
+  const handleCartQtyChange = useCallback(
+    (newVal) => {
+      const n = Number(newVal);
+      if (!Number.isFinite(n) || n < MIN_WEIGHT_KG) {
+        updateQuantity(product.id, 0);
+        return;
+      }
+      updateQuantity(product.id, n);
+    },
+    [product.id, updateQuantity]
+  );
+
+  const handleCartWeightBlur = useCallback(
+    (e) => {
+      const parsed = parseWeightInput(e.target.value);
+      if (parsed !== null) handleCartQtyChange(parsed);
+      else handleCartQtyChange(cartQty);
+    },
+    [cartQty, handleCartQtyChange]
+  );
 
   return (
     <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col">
@@ -142,7 +201,7 @@ const ProductCard = ({ product, cartQty, addItem, updateQuantity }) => {
         )}
         <div className="absolute bottom-2 right-2">
           <span className="bg-primary text-primary-foreground text-xs sm:text-sm font-bold px-2.5 py-1 rounded-lg shadow-md">
-            {product.price} ج.م
+            {displayPrice} ج.م
           </span>
         </div>
       </Link>
@@ -154,6 +213,22 @@ const ProductCard = ({ product, cartQty, addItem, updateQuantity }) => {
           </h3>
         </Link>
         <p className="text-muted-foreground text-xs mb-1">/{product.unit}</p>
+        {byKilo && (
+          <div className="mb-2">
+            <span className="text-muted-foreground text-xs block mb-1">الوزن:</span>
+            <input
+              type="number"
+              min={MIN_WEIGHT_KG}
+              step="0.25"
+              inputMode="decimal"
+              value={weightInput}
+              onChange={handleWeightChange}
+              onBlur={handleWeightBlur}
+              className="w-full rounded-md border border-input bg-background px-2 py-1.5 text-xs font-medium [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              aria-label="الوزن بالكيلو"
+            />
+          </div>
+        )}
         {product.description && (
           <p className="text-muted-foreground text-xs mb-2 line-clamp-2">{product.description}</p>
         )}
@@ -163,6 +238,45 @@ const ProductCard = ({ product, cartQty, addItem, updateQuantity }) => {
             <Button size="sm" className="w-full gap-1.5 text-xs sm:text-sm" onClick={handleAdd}>
               <Plus className="w-3.5 h-3.5" /> أضف للسلة
             </Button>
+          ) : byKilo ? (
+            <div className="flex items-center justify-center gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-7 w-7 sm:h-8 sm:w-8"
+                onClick={() => {
+                  const next = cartQty - WEIGHT_STEP;
+                  if (next < MIN_WEIGHT_KG) updateQuantity(product.id, 0);
+                  else updateQuantity(product.id, next);
+                }}
+              >
+                <Minus className="w-3.5 h-3.5" />
+              </Button>
+              <input
+                type="number"
+                min={MIN_WEIGHT_KG}
+                step="0.25"
+                inputMode="decimal"
+                value={cartQty}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  if (v === "" || v === ".") return;
+                  const parsed = parseWeightInput(v);
+                  if (parsed !== null) updateQuantity(product.id, parsed);
+                }}
+                onBlur={handleCartWeightBlur}
+                className="w-12 sm:w-14 text-center rounded-md border border-input bg-background py-1 text-sm font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                aria-label="الكمية بالكيلو"
+              />
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-7 w-7 sm:h-8 sm:w-8"
+                onClick={() => updateQuantity(product.id, cartQty + WEIGHT_STEP)}
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </Button>
+            </div>
           ) : (
             <div className="flex items-center justify-center gap-2">
               <Button

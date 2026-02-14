@@ -16,6 +16,7 @@ const Header = () => {
     { href: "/offers", label: "العروض" },
     { href: "/about", label: "من نحن" },
     { href: "/contact", label: "تواصل معنا" },
+    { href: "/food-village", label: "قصر الغربية", highlight: true },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -40,7 +41,7 @@ const Header = () => {
       <div className="container-rtl py-1.5">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="جزارة الغربية - اسم يعني الثقة" className="h-16 sm:h-18 w-auto object-contain drop-shadow-md" />
+            <img src={logo} alt="جزارة الغربية - اسم يعني الثقة" className="h-14 sm:h-16 w-auto object-contain drop-shadow-md" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -49,7 +50,13 @@ const Header = () => {
                 key={link.href}
                 to={link.href}
                 className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  isActive(link.href) ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
+                  link.highlight
+                    ? isActive(link.href)
+                      ? "bg-amber-500 text-white"
+                      : "text-amber-600 dark:text-amber-400 hover:bg-amber-500/15 border border-amber-500/40"
+                    : isActive(link.href)
+                      ? "bg-primary text-primary-foreground"
+                      : "text-foreground hover:bg-muted"
                 }`}
               >
                 {link.label}
@@ -71,7 +78,7 @@ const Header = () => {
           <div className="flex items-center gap-2 lg:hidden">
             <ThemeToggle />
             <CartSheet />
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-lg hover:bg-muted transition-colors" aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}>
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 rounded-lg hover:bg-muted transition-colors" aria-label={isMenuOpen ? "إغلاق المنيو" : "فتح المنيو"}>
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -82,7 +89,13 @@ const Header = () => {
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link key={link.href} to={link.href} onClick={() => setIsMenuOpen(false)}
-                  className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 ${isActive(link.href) ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"}`}>
+                  className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                    link.highlight
+                      ? isActive(link.href)
+                        ? "bg-amber-500 text-white"
+                        : "text-amber-600 dark:text-amber-400 hover:bg-amber-500/15 border border-amber-500/40"
+                      : isActive(link.href) ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
+                  }`}>
                   {link.label}
                 </Link>
               ))}

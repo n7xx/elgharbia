@@ -1,5 +1,6 @@
-import { Phone, MessageCircle, Truck, Shield, Clock } from "lucide-react";
+import { ShoppingBag, Sparkles, Truck, Shield, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import heroImage from "@/assets/grilled-meat.jpg";
 import logo from "@/assets/logo-transparent.png";
@@ -67,16 +68,16 @@ const HeroSection = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
               <Button variant="hero" size="xl" asChild>
-                <a href="tel:19026">
-                  <Phone className="w-6 h-6" />
-                  الخط الساخن 19026
-                </a>
+                <Link to="/products">
+                  <ShoppingBag className="w-6 h-6" />
+                  تسوق الآن
+                </Link>
               </Button>
-              <Button variant="whatsapp" size="xl" asChild>
-                <a href="https://wa.me/201234567890" target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-6 h-6" />
-                  اطلب عبر واتساب
-                </a>
+              <Button variant="gold" size="xl" asChild>
+                <Link to="/offers">
+                  <Sparkles className="w-6 h-6" />
+                  شوف عروضنا
+                </Link>
               </Button>
             </div>
 

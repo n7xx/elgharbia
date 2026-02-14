@@ -16,6 +16,8 @@ const Offers = lazy(() => import("./pages/Offers"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Checkout = lazy(() => import("./pages/Checkout"));
+const FoodVillage = lazy(() => import("./pages/FoodVillage"));
+const Menu = lazy(() => import("./pages/Menu"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function PageFallback() {
@@ -46,6 +48,8 @@ const App = () => (
                 <Route path="/about" element={<Suspense fallback={<PageFallback />}><About /></Suspense>} />
                 <Route path="/contact" element={<Suspense fallback={<PageFallback />}><Contact /></Suspense>} />
                 <Route path="/checkout" element={<Suspense fallback={<PageFallback />}><Checkout /></Suspense>} />
+                <Route path="/food-village" element={<Suspense fallback={<PageFallback />}><FoodVillage /></Suspense>} />
+                <Route path="/menu" element={<Suspense fallback={<PageFallback />}><Menu /></Suspense>} />
                 <Route path="*" element={<Suspense fallback={<PageFallback />}><NotFound /></Suspense>} />
               </Routes>
             </CartProvider>

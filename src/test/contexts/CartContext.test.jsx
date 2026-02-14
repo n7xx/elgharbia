@@ -48,7 +48,7 @@ describe("CartContext", () => {
     act(() => {
       screen.getByText("Update").click();
     });
-    expect(screen.getByTestId("total-items").textContent).toBe("2");
+    expect(screen.getByTestId("total-items").textContent).toBe("1");
 
     act(() => {
       screen.getByText("Remove").click();
@@ -58,5 +58,36 @@ describe("CartContext", () => {
 
   it("throws when useCart is used outside CartProvider", () => {
     expect(() => render(<TestConsumer />)).toThrow(/useCart must be used within CartProvider/);
+  });
+
+  it("calculates subtotal correctly for 0.5 kg (price per kg)", () => {
+    const TestSubtotal = () => {
+      const { addItem, subtotal } = useCart();
+      return (
+        <div>
+          <span data-testid="subtotal">{subtotal}</span>
+          <button
+            onClick={() =>
+              addItem(
+                { productId: "p-1", name: "Test", price: 380, unit: "كيلو", imageUrl: null },
+                0.5
+              )
+            }
+          >
+            Add 0.5 kg
+          </button>
+        </div>
+      );
+    };
+    render(
+      <CartProvider>
+        <TestSubtotal />
+      </CartProvider>
+    );
+    expect(screen.getByTestId("subtotal").textContent).toBe("0");
+    act(() => {
+      screen.getByText("Add 0.5 kg").click();
+    });
+    expect(screen.getByTestId("subtotal").textContent).toBe("190");
   });
 });

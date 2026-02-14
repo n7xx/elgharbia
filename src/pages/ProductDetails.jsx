@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import Layout from "@/components/layout/Layout";
@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Minus, Beef, ArrowRight, Share2, Check, Flame } from "lucide-react";
 import { products, categories } from "@/data/products";
 import OptimizedImage from "@/components/common/OptimizedImage";
+import { calculateLineTotal, parseWeightInput, clampWeight, MIN_WEIGHT_KG } from "@/lib/priceUtils";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -21,15 +22,43 @@ const ProductDetails = () => {
     ? items.find((i) => i.productId === product.id)?.quantity || 0
     : 0;
 
+  const byKilo = product?.unit === "كيلو";
+  const [weightKg, setWeightKg] = useState(1);
+  const [weightInput, setWeightInput] = useState("1");
+
+  const handleWeightChange = useCallback((e) => {
+    const raw = e.target.value;
+    if (raw === "" || raw === ".") {
+      setWeightInput(raw);
+      return;
+    }
+    const parsed = parseWeightInput(raw);
+    if (parsed !== null) {
+      setWeightKg(parsed);
+      setWeightInput(String(parsed));
+    } else if (/^\d*\.?\d*$/.test(raw)) setWeightInput(raw);
+  }, []);
+
+  const handleWeightBlur = useCallback(() => {
+    const parsed = parseWeightInput(weightInput);
+    const clamped = parsed !== null ? clampWeight(parsed) : MIN_WEIGHT_KG;
+    setWeightKg(clamped);
+    setWeightInput(String(clamped));
+  }, [weightInput]);
+
   const handleAdd = () => {
     if (!product) return;
-    addItem({
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      unit: product.unit,
-      imageUrl: product.image_url,
-    });
+    const qty = byKilo ? weightKg : 1;
+    addItem(
+      {
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        unit: product.unit,
+        imageUrl: product.image_url,
+      },
+      qty
+    );
   };
 
   const handleShare = async () => {
@@ -111,9 +140,28 @@ const ProductDetails = () => {
               </h1>
 
               <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-3xl font-black text-primary">{product.price} ج.م</span>
+                <span className="text-3xl font-black text-primary">
+                  {byKilo ? calculateLineTotal(product.price, weightKg) : product.price} ج.م
+                </span>
                 <span className="text-muted-foreground">/ {product.unit}</span>
               </div>
+
+              {byKilo && (
+                <div className="mb-4">
+                  <label className="text-sm font-medium text-foreground block mb-2">الوزن (كيلو)</label>
+                  <input
+                    type="number"
+                    min={MIN_WEIGHT_KG}
+                    step="0.25"
+                    inputMode="decimal"
+                    value={weightInput}
+                    onChange={handleWeightChange}
+                    onBlur={handleWeightBlur}
+                    className="w-32 rounded-md border border-input bg-background px-3 py-2 text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    aria-label="الوزن بالكيلو"
+                  />
+                </div>
+              )}
 
               {product.description && (
                 <div className="mb-6">
@@ -129,6 +177,47 @@ const ProductDetails = () => {
                   <Button size="lg" className="w-full gap-2 text-base" onClick={handleAdd}>
                     <Plus className="w-5 h-5" /> أضف للسلة
                   </Button>
+                ) : byKilo ? (
+                  <div className="flex items-center justify-center gap-4 bg-muted rounded-xl p-3">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-10 w-10"
+                      onClick={() => {
+                        const next = cartQty - 0.5;
+                        if (next < MIN_WEIGHT_KG) updateQuantity(product.id, 0);
+                        else updateQuantity(product.id, next);
+                      }}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <input
+                      type="number"
+                      min={MIN_WEIGHT_KG}
+                      step="0.25"
+                      inputMode="decimal"
+                      value={cartQty}
+                      onChange={(e) => {
+                        const parsed = parseWeightInput(e.target.value);
+                        if (parsed !== null) updateQuantity(product.id, parsed);
+                      }}
+                      onBlur={(e) => {
+                        const parsed = parseWeightInput(e.target.value);
+                        if (parsed !== null) updateQuantity(product.id, parsed);
+                        else updateQuantity(product.id, cartQty);
+                      }}
+                      className="w-16 text-center rounded-md border border-input bg-background py-2 text-lg font-black [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      aria-label="الكمية بالكيلو"
+                    />
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-10 w-10"
+                      onClick={() => updateQuantity(product.id, cartQty + 0.5)}
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
                 ) : (
                   <div className="flex items-center justify-center gap-4 bg-muted rounded-xl p-3">
                     <Button

@@ -25,13 +25,13 @@ const OffersSection = () => {
         <AnimatedSection className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-primary text-primary-foreground rounded-full px-4 py-2 mb-4">
             <Flame className="w-5 h-5" />
-            <span className="font-bold">أسعار اليوم</span>
+            <span className="font-bold">شوف عروضنا انهارده</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3">
-            أسعار لحوم الغربية
+          <h2 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-foreground mb-3">
+            ادخل شوف العروض الحصرية اللي بنقدمها كل يوم
           </h2>
           <p className="text-muted-foreground text-lg">
-            أفضل الأسعار مع أعلى جودة
+            عروضنا بتتجدد يوميًا عشان نضمنلك أفضل الأسعار وأجود اللحوم و المشويات
           </p>
         </AnimatedSection>
 
@@ -65,7 +65,7 @@ const OffersSection = () => {
           <div className="text-center">
             <Button variant="cta" size="lg" asChild>
               <Link to="/offers">
-                شوف كل الأسعار
+               ادخل شوف كل العروض
                 <ArrowLeft className="w-5 h-5" />
               </Link>
             </Button>

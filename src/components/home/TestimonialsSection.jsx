@@ -101,7 +101,7 @@ const TestimonialsSection = () => {
               ))}
             </div>
             <div className="text-sm">
-              <span className="font-bold text-foreground">+500</span>
+              <span className="font-bold text-foreground">+5000</span>
               <span className="text-muted-foreground"> عميل سعيد</span>
             </div>
           </div>

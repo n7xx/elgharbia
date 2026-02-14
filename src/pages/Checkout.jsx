@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, MessageCircle, Phone, Banknote, CreditCard, Wallet, ShoppingCart, Loader2, AlertCircle } from "lucide-react";
+import { calculateLineTotal } from "@/lib/priceUtils";
 
 const WHATSAPP_NUMBER = "201111880162";
 
@@ -340,8 +341,10 @@ const Checkout = () => {
                   {/* المنتجات */}
                   {items.map((item) => (
                     <div key={item.productId} className="flex justify-between text-sm">
-                      <span>{item.name} × {item.quantity}</span>
-                      <span>{(item.price * item.quantity).toFixed(2)} ج.م</span>
+                      <span>
+                        {item.name} × {item.unit === "كيلو" ? `${item.quantity} كيلو` : item.quantity}
+                      </span>
+                      <span>{calculateLineTotal(item.price, item.quantity).toFixed(2)} ج.م</span>
                     </div>
                   ))}
                   

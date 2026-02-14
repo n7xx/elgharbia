@@ -1,5 +1,5 @@
 import Layout from "@/components/layout/Layout";
-import { Phone, MessageCircle, MapPin, Clock, Facebook, Instagram } from "lucide-react";
+import { Phone, MessageCircle, MapPin, Clock, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpg";
 
@@ -93,13 +93,6 @@ const Contact = () => {
                     aria-label="فيسبوك"
                   >
                     <Facebook className="w-6 h-6" />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-12 h-12 bg-card rounded-xl flex items-center justify-center shadow-card hover:bg-primary hover:text-primary-foreground transition-colors"
-                    aria-label="انستجرام"
-                  >
-                    <Instagram className="w-6 h-6" />
                   </a>
                 </div>
               </div>
