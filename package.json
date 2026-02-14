@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "copy-favicon": "node scripts/copy-favicon-logo.cjs",
     "dev": "npm run copy-favicon && vite",
-    "build": "npm run copy-favicon && vite build",
+    "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
