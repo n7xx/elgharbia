@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Plus, Minus, Beef, ArrowRight, Share2, Check, Flame } from "lucide-react";
 import { products, categories } from "@/data/products";
+import OptimizedImage from "@/components/common/OptimizedImage";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -85,17 +86,12 @@ const ProductDetails = () => {
         <div className="container-rtl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
             <div className="aspect-square rounded-2xl overflow-hidden bg-muted relative">
-              {product.image_url ? (
-                <img
-                  src={product.image_url}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <Beef className="w-20 h-20 text-muted-foreground/20" />
-                </div>
-              )}
+              <OptimizedImage
+                src={product.image_url}
+                alt={product.name}
+                className="w-full h-full rounded-2xl"
+                aspectRatio="1"
+              />
               {product.is_offer && (
                 <div className="absolute top-3 right-3">
                   <span className="bg-destructive text-destructive-foreground text-sm font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">

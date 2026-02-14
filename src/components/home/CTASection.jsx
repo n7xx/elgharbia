@@ -21,7 +21,7 @@ const CTASection = () => {
             <motion.img
               src={logo}
               alt="جزارة الغربية"
-              className="h-24 w-auto mx-auto mb-6 drop-shadow-lg"
+              className="h-16 w-auto mx-auto mb-6 drop-shadow-lg"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}

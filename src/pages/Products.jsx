@@ -6,6 +6,7 @@ import { ShoppingCart, Plus, Minus, Beef, Flame, UtensilsCrossed, ChefHat } from
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { products, categories } from "@/data/products";
+import OptimizedImage from "@/components/common/OptimizedImage";
 
 const CATEGORY_ICONS = {
   "لحوم بلدي": <Beef className="w-4 h-4" />,
@@ -125,18 +126,12 @@ const ProductCard = ({ product, cartQty, addItem, updateQuantity }) => {
   return (
     <div className="group bg-card rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col">
       <Link to={`/product/${product.id}`} className="aspect-[4/3] relative overflow-hidden bg-muted block">
-        {product.image_url ? (
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <Beef className="w-10 h-10 text-muted-foreground/30" />
-          </div>
-        )}
+        <OptimizedImage
+          src={product.image_url}
+          alt={product.name}
+          className="w-full h-full group-hover:[&>img]:scale-105"
+          imgClassName="transition-transform duration-500"
+        />
         {product.is_offer && (
           <div className="absolute top-2 right-2">
             <span className="bg-destructive text-destructive-foreground text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">

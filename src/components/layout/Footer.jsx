@@ -13,7 +13,7 @@ const branches = [
 
 const Footer = () => {
   return (
-    <footer className="bg-charcoal text-secondary-foreground">
+    <footer className="no-print bg-charcoal text-secondary-foreground">
       <div className="container-rtl section-padding">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <div>
@@ -21,7 +21,7 @@ const Footer = () => {
               <img
                 src={logo}
                 alt="جزارة الغربية"
-                className="h-16 w-auto object-contain bg-card rounded-lg p-1"
+                className="h-10 w-auto object-contain bg-card rounded-lg p-1"
               />
             </div>
             <p className="text-secondary-foreground/80 leading-relaxed mb-2">

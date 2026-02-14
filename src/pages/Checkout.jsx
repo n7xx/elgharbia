@@ -189,8 +189,7 @@ const Checkout = () => {
       // الانتقال لصفحة النجاح
       setSuccess(true);
 
-    } catch (error) {
-      console.error("Order submission error:", error);
+    } catch {
       toast({ 
         title: "خطأ في إرسال الطلب", 
         description: "حاول مرة أخرى أو تواصل معنا عبر الواتساب",

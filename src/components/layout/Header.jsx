@@ -21,7 +21,7 @@ const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
+    <header className="no-print sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
       <div className="bg-primary text-primary-foreground py-2">
         <div className="container-rtl flex items-center justify-between text-sm">
           <div className="flex items-center gap-4">
@@ -40,7 +40,7 @@ const Header = () => {
       <div className="container-rtl py-1.5">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="جزارة الغربية - اسم يعني الثقة" className="h-14 w-auto object-contain drop-shadow-md" />
+            <img src={logo} alt="جزارة الغربية - اسم يعني الثقة" className="h-9 sm:h-10 w-auto object-contain drop-shadow-md" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">

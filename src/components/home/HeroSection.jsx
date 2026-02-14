@@ -45,7 +45,7 @@ const HeroSection = () => {
               <img 
                 src={logo} 
                 alt="جزارة الغربية" 
-                className="relative h-48 w-auto object-contain drop-shadow-2xl"
+                className="relative h-32 sm:h-36 w-auto object-contain drop-shadow-2xl"
               />
             </motion.div>
 

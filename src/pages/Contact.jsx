@@ -11,7 +11,7 @@ const Contact = () => {
           <img
             src={logo}
             alt="جزارة الغربية"
-            className="h-20 w-auto mx-auto mb-4 bg-white rounded-xl p-2"
+            className="h-14 w-auto mx-auto mb-4 bg-white rounded-xl p-2"
           />
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">تواصل معنا</h1>
           <p className="text-lg text-white/90 max-w-2xl mx-auto">

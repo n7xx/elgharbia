@@ -84,7 +84,7 @@ const About = () => {
           <img
             src={logo}
             alt="جزارة الغربية"
-            className="h-24 w-auto mx-auto mb-4 bg-card rounded-xl p-2"
+            className="h-16 w-auto mx-auto mb-4 bg-card rounded-xl p-2"
           />
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">من نحن</h1>
           <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
