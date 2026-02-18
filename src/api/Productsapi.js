@@ -3,7 +3,9 @@
  * API layer for the Products PHP backend.
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://gezaret-elgharbia.com/core/pages/";
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://gezaret-elgharbia.com/core/pages/";
 const ENDPOINT = `${BASE_URL}pro.php`;
 
 const _pending = new Map();
