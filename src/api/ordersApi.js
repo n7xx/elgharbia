@@ -1,10 +1,11 @@
 /**
  * ordersApi.js
  * API layer for the Orders PHP backend.
- * Endpoint: http://localhost/nasho/pages/order.php
  */
 
-const ENDPOINT = "http://gezaret-elgharbia.com/core/pages/order.php";
+const ENDPOINT = import.meta.env.VITE_API_BASE_URL 
+  ? `${import.meta.env.VITE_API_BASE_URL}order.php`
+  : "https://gezaret-elgharbia.com/core/pages/order.php";
 
 async function _request(payload) {
   const formData = new FormData();
