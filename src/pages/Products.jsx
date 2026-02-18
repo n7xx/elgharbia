@@ -20,7 +20,7 @@ import {
   clampWeight,
   MIN_WEIGHT_KG,
 } from "@/lib/priceUtils";
-import { getAllProducts } from "@/api/productsApi";
+import { getAllProducts } from "@/api/Productsapi";
 import { getAllCategories } from "@/api/categoriesApi";
 
 // ─── Category icon map (extend as needed) ────────────────────────────────────
