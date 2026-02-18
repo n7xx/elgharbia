@@ -1,12 +1,35 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { roundMoney, calculateLineTotal } from "@/lib/priceUtils";
 
 const DELIVERY_FEE = 30;
+const CART_KEY = "nasho_cart";
 
 const CartContext = createContext(undefined);
 
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCart(items) {
+  try {
+    localStorage.setItem(CART_KEY, JSON.stringify(items));
+  } catch {
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 export const CartProvider = ({ children }) => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => loadCart());
+  useEffect(() => {
+    saveCart(items);
+  }, [items]);
 
   const addItem = (item, quantity = 1) => {
     const qty = Number(quantity);
@@ -15,7 +38,9 @@ export const CartProvider = ({ children }) => {
       const existing = prev.find((i) => i.productId === item.productId);
       if (existing) {
         return prev.map((i) =>
-          i.productId === item.productId ? { ...i, quantity: i.quantity + safeQty } : i
+          i.productId === item.productId
+            ? { ...i, quantity: i.quantity + safeQty }
+            : i,
         );
       }
       return [...prev, { ...item, quantity: safeQty }];
@@ -32,22 +57,38 @@ export const CartProvider = ({ children }) => {
       removeItem(productId);
       return;
     }
-    setItems((prev) => prev.map((i) => (i.productId === productId ? { ...i, quantity: qty } : i)));
+    setItems((prev) =>
+      prev.map((i) =>
+        i.productId === productId ? { ...i, quantity: qty } : i,
+      ),
+    );
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => {
+    setItems([]);
+    localStorage.removeItem(CART_KEY);
+  };
 
-  /** عدد الطلبات (أسطر السلة) — يعرض فوق أيقونة السلة بدون كسور */
   const totalItems = items.length;
   const subtotal = roundMoney(
-    items.reduce((sum, i) => sum + calculateLineTotal(i.price, i.quantity), 0)
+    items.reduce((sum, i) => sum + calculateLineTotal(i.price, i.quantity), 0),
   );
   const deliveryFee = items.length > 0 ? DELIVERY_FEE : 0;
   const total = roundMoney(subtotal + deliveryFee);
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems, subtotal, deliveryFee, total }}
+      value={{
+        items,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+        totalItems,
+        subtotal,
+        deliveryFee,
+        total,
+      }}
     >
       {children}
     </CartContext.Provider>

@@ -18,8 +18,19 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, MessageCircle, Phone, Banknote, CreditCard, Wallet, ShoppingCart, Loader2, AlertCircle } from "lucide-react";
+import {
+  CheckCircle,
+  MessageCircle,
+  Phone,
+  Banknote,
+  CreditCard,
+  Wallet,
+  ShoppingCart,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
 import { calculateLineTotal } from "@/lib/priceUtils";
+import { submitOrder } from "@/api/ordersApi";
 
 const WHATSAPP_NUMBER = "201111880162";
 
@@ -27,6 +38,7 @@ const Checkout = () => {
   const { items, subtotal, deliveryFee, total, clearCart } = useCart();
   const navigate = useNavigate();
   const { toast } = useToast();
+
   const [success, setSuccess] = useState(false);
   const [whatsappSuccess, setWhatsappSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,7 +50,6 @@ const Checkout = () => {
     notes: "",
   });
   const [paymentMethod, setPaymentMethod] = useState("cash");
-
   if (items.length === 0 && !success && !whatsappSuccess) {
     return (
       <Layout>
@@ -49,14 +60,15 @@ const Checkout = () => {
       </Layout>
     );
   }
-
   if (success) {
     return (
       <Layout>
         <div className="container-rtl section-padding text-center">
           <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
           <h1 className="text-2xl font-bold mb-2">تم إتمام الطلب بنجاح</h1>
-          <p className="text-muted-foreground mb-6">هنتواصل معاك في أقرب وقت لتأكيد الطلب</p>
+          <p className="text-muted-foreground mb-6">
+            هنتواصل معاك في أقرب وقت لتأكيد الطلب
+          </p>
           <Button onClick={() => navigate("/")}>العودة للرئيسية</Button>
         </div>
       </Layout>
@@ -71,9 +83,12 @@ const Checkout = () => {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <MessageCircle className="w-8 h-8 text-green-600" />
             </div>
-            <h1 className="text-2xl font-bold mb-2">تم إرسال الطلب على الواتساب بنجاح</h1>
+            <h1 className="text-2xl font-bold mb-2">
+              تم إرسال الطلب على الواتساب بنجاح
+            </h1>
             <p className="text-muted-foreground mb-6">
-              تم فتح الواتساب مع رسالة طلبك. اضغط "إرسال" في الواتساب لإتمام الطلب.
+              تم فتح الواتساب مع رسالة طلبك. اضغط "إرسال" في الواتساب لإتمام
+              الطلب.
             </p>
             <div className="flex gap-3 justify-center">
               <Button onClick={() => navigate("/")}>العودة للرئيسية</Button>
@@ -93,15 +108,27 @@ const Checkout = () => {
     const address = form.address.trim();
 
     if (!name || name.length < 3) {
-      toast({ title: "خطأ", description: "برجاء إدخال الاسم بالكامل", variant: "destructive" });
+      toast({
+        title: "خطأ",
+        description: "برجاء إدخال الاسم بالكامل",
+        variant: "destructive",
+      });
       return false;
     }
     if (!/^01[0-9]{9}$/.test(phone)) {
-      toast({ title: "خطأ", description: "برجاء إدخال رقم تليفون صحيح", variant: "destructive" });
+      toast({
+        title: "خطأ",
+        description: "برجاء إدخال رقم تليفون صحيح",
+        variant: "destructive",
+      });
       return false;
     }
     if (!address || address.length < 10) {
-      toast({ title: "خطأ", description: "برجاء إدخال العنوان بالتفصيل", variant: "destructive" });
+      toast({
+        title: "خطأ",
+        description: "برجاء إدخال العنوان بالتفصيل",
+        variant: "destructive",
+      });
       return false;
     }
     return true;
@@ -115,8 +142,7 @@ const Checkout = () => {
     msg += `العنوان: ${form.address.trim()}\n\n`;
     msg += `📦 *تفاصيل الطلب:*\n`;
     items.forEach((item) => {
-      const lineTotal = (item.price * item.quantity).toFixed(2);
-      msg += `• ${item.name} × ${item.quantity} - ${lineTotal} ج.م\n`;
+      msg += `• ${item.name} × ${item.quantity} - ${(item.price * item.quantity).toFixed(2)} ج.م\n`;
     });
     msg += `\n💰 *ملخص الفاتورة:*\n`;
     msg += `المجموع: ${subtotal.toFixed(2)} ج.م\n`;
@@ -128,111 +154,76 @@ const Checkout = () => {
     return encodeURIComponent(msg);
   };
 
-  // دالة إرسال الطلب للـ Dashboard/Backend
   const handleOrderSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-
     try {
-      // تجهيز بيانات الطلب
-      const orderData = {
+      const { success: ok, id: newId } = await submitOrder({
         customer: {
           name: form.name.trim(),
           phone: form.phone.replace(/\s/g, ""),
           address: form.address.trim(),
-          notes: form.notes.trim() || null,
+          notes: form.notes.trim() || "",
         },
-        items: items.map(item => ({
+        items: items.map((item) => ({
           productId: item.productId,
           name: item.name,
           price: item.price,
           quantity: item.quantity,
-          total: item.price * item.quantity,
         })),
         summary: {
           subtotal: parseFloat(subtotal.toFixed(2)),
           deliveryFee: deliveryFee,
           total: parseFloat(total.toFixed(2)),
         },
-        paymentMethod: paymentMethod,
-        status: "pending", // حالة الطلب: pending, confirmed, delivered, cancelled
-        createdAt: new Date().toISOString(),
-      };
-
-      // هنا هتحط الـ API call للـ Backend
-      // مثال:
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
+        payment: paymentMethod,
+        delivery: deliveryFee,
       });
 
-      if (!response.ok) {
-        throw new Error("فشل في إرسال الطلب");
-      }
+      if (!ok) throw new Error("Server returned failure");
 
-      const result = await response.json();
-
-      // مسح السلة
       clearCart();
-
-      // عرض رسالة نجاح
-      toast({ 
-        title: "تم إرسال الطلب بنجاح!", 
-        description: `رقم الطلب: ${result.orderId || ""}` 
+      toast({
+        title: "تم إرسال الطلب بنجاح!",
+        description: newId ? `رقم الطلب: #${newId}` : "",
       });
-
-      // الانتقال لصفحة النجاح
       setSuccess(true);
-
     } catch {
-      toast({ 
-        title: "خطأ في إرسال الطلب", 
+      toast({
+        title: "خطأ في إرسال الطلب",
         description: "حاول مرة أخرى أو تواصل معنا عبر الواتساب",
-        variant: "destructive" 
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // دالة فتح الواتساب بالرسالة الجاهزة
   const handleWhatsAppContact = () => {
     if (!validateForm()) return;
-    
-    // فتح نافذة التأكيد
     setShowWhatsAppConfirm(true);
   };
 
-  // دالة التأكيد وفتح الواتساب
   const confirmWhatsAppSend = () => {
-    const waMsg = buildWhatsAppMessage();
-    
-    // فتح الواتساب
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`, "_blank");
-    
-    // مسح السلة
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${buildWhatsAppMessage()}`,
+      "_blank",
+    );
     clearCart();
-    
-    // إغلاق نافذة التأكيد
     setShowWhatsAppConfirm(false);
-    
-    // عرض صفحة النجاح
     setWhatsappSuccess(true);
   };
-
   return (
     <Layout>
       <section className="section-padding">
         <div className="container-rtl max-w-3xl">
           <h1 className="text-2xl font-bold mb-6">إتمام الطلب</h1>
-          <form onSubmit={handleOrderSubmit} className="grid gap-6 md:grid-cols-2">
-            {/* بيانات التوصيل */}
+          <form
+            onSubmit={handleOrderSubmit}
+            className="grid gap-6 md:grid-cols-2"
+          >
             <Card className="md:col-span-1">
               <CardHeader>
                 <CardTitle className="text-lg">بيانات التوصيل</CardTitle>
@@ -240,80 +231,74 @@ const Checkout = () => {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">الاسم بالكامل</Label>
-                  <Input 
+                  <Input
                     id="name"
-                    value={form.name} 
-                    onChange={(e) => setForm({ ...form, name: e.target.value })} 
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="أدخل الاسم بالكامل"
-                    required 
+                    required
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone">رقم التليفون</Label>
-                  <Input 
+                  <Input
                     id="phone"
-                    type="tel" 
-                    value={form.phone} 
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })} 
+                    type="tel"
+                    value={form.phone}
+                    onChange={(e) =>
+                      setForm({ ...form, phone: e.target.value })
+                    }
                     placeholder="01xxxxxxxxx"
-                    required 
+                    required
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="address">العنوان بالتفصيل</Label>
-                  <Textarea 
+                  <Textarea
                     id="address"
-                    value={form.address} 
-                    onChange={(e) => setForm({ ...form, address: e.target.value })} 
+                    value={form.address}
+                    onChange={(e) =>
+                      setForm({ ...form, address: e.target.value })
+                    }
                     placeholder="المدينة، الحي، الشارع، رقم المبنى..."
-                    required 
-                    rows={3} 
+                    required
+                    rows={3}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="notes">ملاحظات (اختياري)</Label>
-                  <Textarea 
+                  <Textarea
                     id="notes"
-                    value={form.notes} 
-                    onChange={(e) => setForm({ ...form, notes: e.target.value })} 
+                    value={form.notes}
+                    onChange={(e) =>
+                      setForm({ ...form, notes: e.target.value })
+                    }
                     placeholder="أي ملاحظات إضافية..."
-                    rows={2} 
+                    rows={2}
                   />
                 </div>
               </CardContent>
             </Card>
-
-            {/* ملخص الطلب وطرق الدفع */}
             <div className="space-y-6">
-              {/* طرق الدفع */}
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">طرق الدفع</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  {/* كاش عند الاستلام */}
                   <div
                     onClick={() => setPaymentMethod("cash")}
-                    className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                      paymentMethod === "cash" 
-                        ? "border-primary bg-primary/5" 
-                        : "border-border hover:border-primary/40"
-                    }`}
+                    className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${paymentMethod === "cash" ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"}`}
                   >
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      paymentMethod === "cash" ? "border-primary" : "border-muted-foreground"
-                    }`}>
+                    <div
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${paymentMethod === "cash" ? "border-primary" : "border-muted-foreground"}`}
+                    >
                       {paymentMethod === "cash" && (
                         <div className="w-2.5 h-2.5 rounded-full bg-primary" />
                       )}
                     </div>
                     <Banknote className="w-6 h-6 text-primary" />
-                    <div>
-                      <span className="font-bold">كاش عند الاستلام</span>
-                    </div>
+                    <span className="font-bold">كاش عند الاستلام</span>
                   </div>
-
-                  {/* فيزا ومحافظ إلكترونية (معطل) */}
                   <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-border bg-muted/30 opacity-55 cursor-not-allowed pointer-events-none">
                     <div className="w-5 h-5 rounded-full border-2 border-muted-foreground flex items-center justify-center shrink-0" />
                     <div className="flex gap-1">
@@ -331,24 +316,30 @@ const Checkout = () => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* ملخص الطلب */}
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">ملخص الطلب</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  {/* المنتجات */}
                   {items.map((item) => (
-                    <div key={item.productId} className="flex justify-between text-sm">
+                    <div
+                      key={item.productId}
+                      className="flex justify-between text-sm"
+                    >
                       <span>
-                        {item.name} × {item.unit === "كيلو" ? `${item.quantity} كيلو` : item.quantity}
+                        {item.name} ×{" "}
+                        {item.unit === "كيلو"
+                          ? `${item.quantity} كيلو`
+                          : item.quantity}
                       </span>
-                      <span>{calculateLineTotal(item.price, item.quantity).toFixed(2)} ج.م</span>
+                      <span>
+                        {calculateLineTotal(item.price, item.quantity).toFixed(
+                          2,
+                        )}{" "}
+                        ج.م
+                      </span>
                     </div>
                   ))}
-                  
-                  {/* الإجمالي */}
                   <div className="border-t pt-2 mt-2 space-y-1">
                     <div className="flex justify-between text-sm">
                       <span>المجموع:</span>
@@ -363,8 +354,6 @@ const Checkout = () => {
                       <span>{total.toFixed(2)} ج.م</span>
                     </div>
                   </div>
-
-                  {/* زرار اطلب الآن - يرسل للـ Backend */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -383,7 +372,7 @@ const Checkout = () => {
                     )}
                   </button>
 
-                  {/* زرار الواتساب - يفتح الواتساب مباشرة */}
+                  {/* واتساب */}
                   <button
                     type="button"
                     onClick={handleWhatsAppContact}
@@ -394,21 +383,19 @@ const Checkout = () => {
                     تواصل معنا على الواتساب
                   </button>
 
-                  {/* الخط الساخن */}
                   <div className="mt-4 space-y-2">
                     <p className="text-sm text-muted-foreground text-center">
                       أو اتصل بنا مباشرة
                     </p>
-                    <Button 
+                    <Button
                       type="button"
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full gap-2" 
+                      variant="outline"
+                      size="sm"
+                      className="w-full gap-2"
                       asChild
                     >
                       <a href="tel:19026">
-                        <Phone className="w-4 h-4" /> 
-                        الخط الساخن 19026
+                        <Phone className="w-4 h-4" /> الخط الساخن 19026
                       </a>
                     </Button>
                   </div>
@@ -418,16 +405,19 @@ const Checkout = () => {
           </form>
         </div>
       </section>
-
-      {/* نافذة التأكيد قبل إرسال الواتساب */}
-      <AlertDialog open={showWhatsAppConfirm} onOpenChange={setShowWhatsAppConfirm}>
+      <AlertDialog
+        open={showWhatsAppConfirm}
+        onOpenChange={setShowWhatsAppConfirm}
+      >
         <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center shrink-0">
                 <AlertCircle className="w-6 h-6 text-amber-600" />
               </div>
-              <AlertDialogTitle className="text-xl">تأكيد إرسال الطلب</AlertDialogTitle>
+              <AlertDialogTitle className="text-xl">
+                تأكيد إرسال الطلب
+              </AlertDialogTitle>
             </div>
             <AlertDialogDescription className="text-right space-y-3 text-base">
               <p className="font-medium text-foreground">
@@ -456,7 +446,7 @@ const Checkout = () => {
             <AlertDialogCancel className="flex-1 m-0">
               لا، إلغاء
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={confirmWhatsAppSend}
               className="flex-1 bg-[#25D366] hover:bg-[#20BD5A]"
             >

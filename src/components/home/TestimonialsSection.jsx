@@ -11,10 +11,10 @@ import AnimatedSection from "@/components/common/AnimatedSection";
 import AnimatedItem from "@/components/common/AnimatedItem";
 
 const testimonials = [
-  { id: 1, name: "أحمد محمود", location: "سيدي جابر", rating: 5, text: "أفضل جزارة في إسكندرية بجد! اللحمة طازة جداً والخدمة ممتازة. التوصيل سريع ودايماً بيوصلوا في الميعاد." },
-  { id: 2, name: "سارة أحمد", location: "سموحة", rating: 5, text: "المشويات عندهم تحفة! الكباب والكفتة طعمهم مميز جداً. أنصح الكل يجربوا صينية المشويات المشكلة." },
+  { id: 1, name: "أحمد محمود", location: "سيدي جابر", rating: 5, text: "أفضل جزارة في إسكندرية بجد! اللحمة طازة جداً والخدمة ممتازة. التوصيل سريع ." },
+  { id: 2, name: "سارة أحمد", location: "سموحة", rating: 5, text: "المشويات عندهم تحفة! الكباب والكفتة طعمهم حلو جداً. أنصح الكل يجربوا صينية المشويات المشكلة ." },
   { id: 3, name: "محمد عبدالله", location: "المنتزه", rating: 5, text: "بقالي سنين بتعامل معاهم والجودة ثابتة دايماً. الأسعار كويسة جداً مقارنة بالجودة اللي بتاخدها." },
-  { id: 4, name: "نورهان خالد", location: "جليم", rating: 5, text: "خدمة العملاء عندهم رائعة جداً! دايماً بيساعدوني أختار قطع اللحمة المناسبة للأكلة اللي هعملها." },
+  { id: 4, name: "نورهان خالد", location: "جليم", rating: 5, text: "خدمة العملاء عندهم ذوق جداً! دايماً بيساعدوني أختار اللحمة المناسبة للأكلة اللي هعملها ." },
 ];
 
 const TestimonialCard = ({ testimonial }) => (
@@ -49,7 +49,7 @@ const TestimonialsSection = () => {
             <span className="font-semibold">آراء عملائنا</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3">
-            ليه عملاءنا بيحبونا؟
+            ليه عملائنا بيحبونا؟
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             آراء حقيقية من عملاء جربوا منتجاتنا وخدماتنا

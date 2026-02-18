@@ -44,7 +44,7 @@ const CTASection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              اتصل بينا دلوقتي أو ابعتلنا على واتساب وهنوصلك طلبك في أسرع وقت
+              اطلب دلوقتي و هنوريك الفرق بنفسك!
             </motion.p>
 
             <motion.div
@@ -57,7 +57,7 @@ const CTASection = () => {
               <Button variant="hero" size="xl" asChild>
                 <Link to="/products">
                   <ShoppingBag className="w-6 h-6" />
-                  تسوق الآن
+                  اطلب الآن
                 </Link>
               </Button>
               <Button variant="gold" size="xl" asChild>

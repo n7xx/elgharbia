@@ -2,7 +2,7 @@ import { ShoppingBag, Sparkles, Truck, Shield, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import heroImage from "@/assets/grilled-meat.jpg";
+import heroImage from "@/assets/HeroSection.jpg";
 import logo from "@/assets/logo-transparent.png";
 
 const HeroSection = () => {
@@ -61,7 +61,8 @@ const HeroSection = () => {
             </p>
 
             <p className="text-lg text-white/80 mb-8 max-w-lg mx-auto lg:mx-0 lg:mr-0">
-              جزارة الغربية - اختيارك الأول للحوم الطازة والمشويات الشهية. 
+             جزارة الغربية - اختيارك الأول للحوم الطازة والمشويات
+              <br />
               توصيل سريع لجميع مناطق الإسكندرية.
             </p>
 
@@ -70,7 +71,7 @@ const HeroSection = () => {
               <Button variant="hero" size="xl" asChild>
                 <Link to="/products">
                   <ShoppingBag className="w-6 h-6" />
-                  تسوق الآن
+                  اطلب الآن
                 </Link>
               </Button>
               <Button variant="gold" size="xl" asChild>

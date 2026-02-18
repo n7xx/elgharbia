@@ -2,19 +2,19 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Shield, Award, Users, Truck, Clock, Heart, Phone, MessageCircle, MapPin, ShoppingBag, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import shopTeam from "@/assets/shop-team.jpg";
+import shopTeam from "@/assets/AboutSection.jpeg";
 import logo from "@/assets/logo.jpg";
 
 const values = [
   {
     icon: Shield,
     title: "جودة مضمونة",
-    description: "بنختار لحومنا بعناية من أجود المصادر. كل قطعة لحم بتمر بفحص دقيق عشان نضمنلك أحسن جودة.",
+    description: "بنختار لحومنا بعناية من مزارعنا عشان نضمنلك أفضل جودة. ",
   },
   {
     icon: Award,
     title: "خبرة سنين",
-    description: "خبرة طويلة في مجال الجزارة والمشويات. نعرف ازاي نختار ونحضر اللحمة صح.",
+    description: "خبرة طويلة في مجال الجزارة والمشويات نعرف ازاي نختار ونحضر اللحمة صح.",
   },
   {
     icon: Users,
@@ -24,7 +24,7 @@ const values = [
   {
     icon: Truck,
     title: "توصيل سريع",
-    description: "نوصلك طلبك لحد البيت في أسرع وقت. التوصيل متاح لجميع مناطق الإسكندرية.",
+    description: "نوصلك طلبك لحد البيت في أسرع وقت. التوصيل متاح لجميع انحاء الإسكندرية.",
   },
   {
     icon: Clock,
@@ -42,7 +42,7 @@ const branches = [
   {
     name: "فرع العصافرة (الفرع الرئيسي)",
     address: "جمال عبد الناصر العصافرة بحري بعد عروس دمشق ناصية شارع سيدي كمال",
-    phones: ["5514931", "5514839", "5514830", "5514631"],
+    phones: ["01044476413","01111880575","035514631", "035514830","035514931"],
     mapQuery: "جمال+عبد+الناصر+العصافرة+بحري+الاسكندرية",
   },
   {
@@ -87,7 +87,9 @@ const About = () => {
             alt="جزارة الغربية"
             className="h-16 w-auto mx-auto mb-4 bg-card rounded-xl p-2"
           />
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">من نحن</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4">
+            من نحن
+          </h1>
           <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto">
             جزارة الغربية - اسم يعني الثقة - ملوك اللحمة البلدي في مصر
           </p>
@@ -103,13 +105,22 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
                 <p>
-                  جزارة الغربية - اسم يعني الثقة. بدأنا رحلتنا بهدف واحد بسيط: نقدم للعميل لحمة بلدي طازة بجودة عالية وسعر مناسب.
+                  من أول يوم، هدفنا كان واضح نقدم لحمة بلدي طازة بجودة عالية
+                  وسعر مناسب.
                 </p>
                 <p>
-                  تحت إدارة <strong className="text-foreground">خلف محمد خالد</strong>، أصبحنا ملوك اللحمة البلدي في مصر. نفتخر بتقديم أجود أنواع اللحوم الطازة لعملائنا في الإسكندرية.
+                  في جزارة الغربية، الاسم مرتبط بالثقة. عشان كده احنا بنهتم بأدق
+                  التفاصيل، وبنختار أفضل أنواع اللحوم، وبنحافظ على نفس الجودة كل
+                  يوم.
                 </p>
                 <p>
-                  النهارده، إحنا فخورين بثقة آلاف الأسر اللي بتعتمد علينا يوميًا. وده اللي بيدفعنا نستمر ونطور أكتر.
+                  بفضل ثقة آلاف الأسر في الإسكندرية، بقينا الاختيار الأول لناس
+                  كتير.
+                  <br />
+                  <br />
+                  <strong className="text-primary"> جزارة الغربية</strong>
+                  <br />
+                  اسم يعني الثقة.
                 </p>
               </div>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
@@ -120,7 +131,11 @@ const About = () => {
                   </a>
                 </Button>
                 <Button variant="whatsapp" size="lg" asChild>
-                  <a href="https://wa.me/201111880162" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://wa.me/201111880162"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <MessageCircle className="w-5 h-5" />
                     واتساب
                   </a>
@@ -132,7 +147,7 @@ const About = () => {
               <img
                 src={shopTeam}
                 alt="فريق جزارة الغربية"
-                className="relative rounded-2xl shadow-lg w-full aspect-[4/5] object-cover"
+                className="relative rounded-2xl shadow-lg w-full aspect-[4/4] object-cover"
               />
             </div>
           </div>
@@ -146,7 +161,7 @@ const About = () => {
               فروعنا
             </h2>
             <p className="text-muted-foreground text-lg">
-              6 فروع في الإسكندرية لخدمتك - الخط الساخن للفروع: 19026
+              6 فروع في الإسكندرية لخدمتك - الخط الساخن للفروع: <strong className="text-primary">19026</strong>
             </p>
             <div className="mt-4 h-1 w-20 bg-primary rounded-full mx-auto" />
           </div>
@@ -210,7 +225,9 @@ const About = () => {
                 <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center mb-4">
                   <value.icon className="w-7 h-7 text-primary-foreground" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
+                <h3 className="text-xl font-bold text-foreground mb-2">
+                  {value.title}
+                </h3>
                 <p className="text-muted-foreground">{value.description}</p>
               </div>
             ))}
@@ -224,13 +241,13 @@ const About = () => {
             جاهز تجرب؟
           </h2>
           <p className="text-primary-foreground/90 text-lg mb-8 max-w-xl mx-auto">
-            اتصل بينا دلوقتي واطلب أول طلب. هنوريك الفرق بنفسك!
+            اطلب دلوقتي و هنوريك الفرق بنفسك!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="hero" size="xl" asChild>
               <Link to="/products">
                 <ShoppingBag className="w-6 h-6" />
-                تسوق الآن
+                اطلب الآن
               </Link>
             </Button>
             <Button variant="gold" size="xl" asChild>

@@ -3,20 +3,7 @@ import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/common/AnimatedSection";
 import { motion } from "framer-motion";
 
-const areas = [
-  "سيدي جابر",
-  "سموحة",
-  "العصافرة",
-  "المنتزه",
-  "الأنفوشي",
-  "محرم بك",
-  "كرموز",
-  "العجمي",
-  "المندرة",
-  "جليم",
-  "رشدي",
-  "كامب شيزار",
-];
+
 
 const DeliverySection = () => {
   return (
@@ -53,7 +40,7 @@ const DeliverySection = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  توصيل سريع لجميع مناطق الإسكندرية. اطلب دلوقتي واستلم في أسرع وقت!
+                  توصيل سريع لجميع انحاء الإسكندرية. اطلب دلوقتي واستلم في أسرع وقت!
                 </motion.p>
 
                 <motion.div
@@ -63,21 +50,11 @@ const DeliverySection = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  <h3 className="font-bold text-foreground mb-3">المناطق اللي بنوصلها:</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {areas.map((area, index) => (
-                      <motion.span
-                        key={area}
-                        className="bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: 0.4 + index * 0.03 }}
-                      >
-                        {area}
-                      </motion.span>
-                    ))}
-                  </div>
+                  <h2 className="font-bold text-foreground mb-3">هنوصلك في اي حته في اسكندريه </h2>
+                  <p className="text-muted-foreground">
+                    من بحري للمعمورة احنا جاهزين نوصللك أجود اللحوم والمشويات لحد باب بيتك.
+                  </p>
+
                 </motion.div>
 
                 <motion.div

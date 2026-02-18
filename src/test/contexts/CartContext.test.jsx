@@ -3,7 +3,15 @@ import { render, screen, act } from "@testing-library/react";
 import { CartProvider, useCart } from "../../contexts/CartContext";
 
 const TestConsumer = () => {
-  const { items, addItem, removeItem, updateQuantity, totalItems, subtotal, total } = useCart();
+  const {
+    items,
+    addItem,
+    removeItem,
+    updateQuantity,
+    totalItems,
+    subtotal,
+    total,
+  } = useCart();
   return (
     <div>
       <span data-testid="count">{items.length}</span>
@@ -34,7 +42,7 @@ describe("CartContext", () => {
     render(
       <CartProvider>
         <TestConsumer />
-      </CartProvider>
+      </CartProvider>,
     );
     expect(screen.getByTestId("count").textContent).toBe("0");
     expect(screen.getByTestId("total-items").textContent).toBe("0");
@@ -57,7 +65,9 @@ describe("CartContext", () => {
   });
 
   it("throws when useCart is used outside CartProvider", () => {
-    expect(() => render(<TestConsumer />)).toThrow(/useCart must be used within CartProvider/);
+    expect(() => render(<TestConsumer />)).toThrow(
+      /useCart must be used within CartProvider/,
+    );
   });
 
   it("calculates subtotal correctly for 0.5 kg (price per kg)", () => {
@@ -69,8 +79,14 @@ describe("CartContext", () => {
           <button
             onClick={() =>
               addItem(
-                { productId: "p-1", name: "Test", price: 380, unit: "كيلو", imageUrl: null },
-                0.5
+                {
+                  productId: "p-1",
+                  name: "Test",
+                  price: 380,
+                  unit: "كيلو",
+                  imageUrl: null,
+                },
+                0.5,
               )
             }
           >
@@ -82,7 +98,7 @@ describe("CartContext", () => {
     render(
       <CartProvider>
         <TestSubtotal />
-      </CartProvider>
+      </CartProvider>,
     );
     expect(screen.getByTestId("subtotal").textContent).toBe("0");
     act(() => {

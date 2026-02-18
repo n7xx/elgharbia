@@ -3,7 +3,7 @@ import AnimatedSection from "@/components/common/AnimatedSection";
 import AnimatedItem from "@/components/common/AnimatedItem";
 
 const features = [
-  { icon: Shield, title: "جودة مضمونة", description: "لحوم بلدي طازة من أجود المصادر" },
+  { icon: Shield, title: "جودة مضمونة", description: "لحوم بلدي طازة من  مزارعنا" },
   { icon: Truck, title: "توصيل سريع", description: "نوصلك لحد البيت في أسرع وقت" },
   { icon: Percent, title: "أسعار منافسة", description: "أفضل الأسعار في السوق مع عروض مستمرة" },
   { icon: Clock, title: "متاحين دائمًا", description: "من 8 الصبح لـ 12 بالليل كل يوم" },
@@ -20,7 +20,7 @@ const FeaturesSection = () => {
             ليه تختار جزارة الغربية؟
           </h2>
           <p className="text-muted-foreground text-lg">
-            أسباب تخليك تثق فينا دايمًا
+            أسباب تخليك تثق فينا 
           </p>
           <div className="mt-4 h-1 w-20 bg-gradient-accent rounded-full mx-auto" />
         </AnimatedSection>

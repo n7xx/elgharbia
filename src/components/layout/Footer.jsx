@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Phone, MapPin, Clock, Facebook, Linkedin } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 import fourCreativeDark from "@/assets/4creative-darkmode-logo.png";
-import fourCreativeLight from "@/assets/4creative-lightmode-logo.png";
+
 
 const branches = [
   {
@@ -51,12 +51,20 @@ const Footer = () => {
                 { href: "/offers", label: "العروض" },
                 { href: "/about", label: "من نحن" },
                 { href: "/contact", label: "تواصل معنا" },
-                { href: "/food-village", label: "قصر الغربية", highlight: true },
+                {
+                  href: "/food-village",
+                  label: "قصر الغربية",
+                  highlight: true,
+                },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className={link.highlight ? "text-amber-400 hover:text-amber-300 transition-colors font-medium" : "text-secondary-foreground/80 hover:text-gold transition-colors"}
+                    className={
+                      link.highlight
+                        ? "text-amber-400 hover:text-amber-300 transition-colors font-medium"
+                        : "text-secondary-foreground/80 hover:text-gold transition-colors"
+                    }
                   >
                     {link.label}
                   </Link>
@@ -144,15 +152,15 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-secondary/30">
-        <div className="container-rtl py-4 space-y-3">
+        <div className="container-rtl py-4 space-y-1">
           <p className="text-center text-secondary-foreground/60 text-sm">
             © {new Date().getFullYear()} جزارة و مشويات الغربية - جميع الحقوق
             محفوظة
           </p>
 
           {/* 4Creative Credit */}
-          <div className="flex flex-col items-center gap-3">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center">
+            <div className="flex items-center gap-2">
               <a
                 href="https://4creative.vercel.app/"
                 target="_blank"
@@ -160,19 +168,15 @@ const Footer = () => {
                 className="transition-opacity hover:opacity-80"
               >
                 <img
-                  src={fourCreativeLight}
-                  alt="4Creative"
-                  className="h-12 w-auto object-contain dark:hidden"
-                />
-                <img
                   src={fourCreativeDark}
                   alt="4Creative"
-                  className="h-12 w-auto object-contain hidden dark:block"
+                  className="h-14 w-auto object-contain"
                 />
               </a>
               <p className="text-center text-secondary-foreground/60 text-sm">
-                تم تطوير هذا الموقع بواسطة 4Creative - فريق متخصص في تصميم
-                وتطوير المواقع الإلكترونية
+                تم تطوير هذا الموقع بواسطة 4Creative
+                - فريق متخصص في تصميم
+                وتطوير المواقع.
               </p>
             </div>
             <p className="text-secondary-foreground/50 text-xs flex items-center gap-1 flex-wrap justify-center">
